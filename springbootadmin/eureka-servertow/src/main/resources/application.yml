@@ -1,0 +1,38 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+eureka:
+  instance:
+    hostname: localhost
+    health-check-url-path: /actuator/health
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    metadata-map:
+      startup: ${random.int}  #需要在重启后触发信息和端点更新
+      #如果springbootadmin配置了security需要在这里添加用户名和密码
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      startup: ${random.int}  #需要在重启后触发信息和端点更新
+      #因为eureka配置了security需要在url上面带上用户名和密码
+      defaultZone: http://admin:admin@${eureka.instance.hostname}:8080/eureka/,http://admin:admin@${eureka.instance.hostname}:8081/eureka/
+    register-with-eureka: true # 是否拉取其它服务的信息，默认是true
+    fetch-registry: true # 是否注册自己的信息到EurekaServer，默认是true
+    server:
+      enable-self-preservation: false # 关闭自我保护模式（缺省为打开）
+      eviction-interval-timer-in-ms: 1000 # 扫描失效服务的间隔时间（缺省为60*1000ms）
+# 开放所有endpoint，实际生产根据自身需要开放，出于安全考虑不建议全部开放。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS

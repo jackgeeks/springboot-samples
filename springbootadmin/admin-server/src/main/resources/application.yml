@@ -1,0 +1,59 @@
+server:
+  port: 9091
+
+#设置security
+spring:
+  application:
+    name: admin-server
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+#配置eureka
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10 #eurek心跳
+    health-check-url-path: /actuator/health #健康检查页面的URL，相对路径，默认使用 HTTP 访问，如果需要使用 HTTPS则需要使用绝对路径配置
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    metadata-map:
+      startup: ${random.int}  #需要在重启后触发信息和端点更新
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    hostname: localhost
+  client:
+    registryFetchIntervalSeconds: 5 #  从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+    serviceUrl:
+      defaultZone: http://admin:admin@${eureka.instance.hostname}:8080/eureka/,http://admin:admin@${eureka.instance.hostname}:8081/eureka/
+# 开放所有endpoint，实际生产根据自身需要开放，出于安全考虑不建议全部开放。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+
+  ###################
+  # 邮件通知配置 此处暂时注释掉，如果要运行的话请先配置好，否此控制台会报错
+  ##################
+#  mail:
+#    host: smtphm.qiye.163.com
+#    username: # 用户名
+#    password: # 密码
+#  boot:
+#    admin:
+#      notify:
+#        mail:
+#          to: # 收件人
+#          enabled: true
+#          from: # 发件人
+#关于日志管理
+#logging:
+#  file: "/var/log/sample-boot-application.log"
+#  pattern:
+#    file: "%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n%wEx"
+#
+
+

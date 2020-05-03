@@ -1,0 +1,38 @@
+server:
+  port: 9002
+#配置security
+spring:
+  application:
+    name: admin-client
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+
+#配置eureka
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 10 #eurek心跳
+    health-check-url-path: /actuator/health #健康检查页面的URL，相对路径，默认使用 HTTP 访问，如果需要使用 HTTPS则需要使用绝对路径配置
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    metadata-map:
+      startup: ${random.int}  #需要在重启后触发信息和端点更新
+  #如果eureka配置了security需要在这里添加用户名和密码
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+    hostname: localhost
+  client:
+    registryFetchIntervalSeconds: 5  #  从eureka服务器注册表中获取注册信息的时间间隔（s），默认为30秒
+    serviceUrl:
+      defaultZone: http://admin:admin@${eureka.instance.hostname}:8080/eureka/,http://admin:admin@${eureka.instance.hostname}:8081/eureka/
+# 开放所有endpoint，实际生产根据自身需要开放，出于安全考虑不建议全部开放。
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
+
+

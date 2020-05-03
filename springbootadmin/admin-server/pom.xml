@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.wpp</groupId>
+    <artifactId>admin-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>admin-server</name>
+    <packaging>jar</packaging>
+
+
+    <parent>
+        <groupId>com.wpp</groupId>
+        <artifactId>springbootadmin</artifactId>
+        <version>0.0.1-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+        <!-- spring-boot-admin服务端 -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-starter-server</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+        <!-- spring-boot-adminUI -->
+        <dependency>
+            <groupId>de.codecentric</groupId>
+            <artifactId>spring-boot-admin-server-ui</artifactId>
+            <version>2.1.6</version>
+        </dependency>
+        <!--添加eureka依赖-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+        <!--   官方原文：要在管理界面中与JMX bean进行交互，您必须在应用程序中包含Jolokia。由于Jolokia是基于servlet的，因此不支持反应式应用程序。如果您正在使用，spring-boot-admin-starter-client它将为您拉入，如果没有，则将Jolokia添加到您的依赖项中-->
+        <!--        <dependency>-->
+        <!--            <groupId>org.jolokia</groupId>-->
+        <!--            <artifactId>jolokia-core</artifactId>-->
+        <!--        </dependency>-->
+        <!--  mail支持      -->
+        <!--<dependency>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-mail</artifactId>-->
+        <!--</dependency>-->
+
+    </dependencies>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

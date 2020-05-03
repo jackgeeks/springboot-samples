@@ -1,0 +1,34 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: eureka-server
+  security:
+    user:
+      name: "admin"
+      password: "admin"
+eureka:
+  instance:
+    hostname: localhost
+    prefer-ip-address: true #如果设置了eureka.instance.ip-address 属性，则使用该属性配置的IP
+    metadata-map:
+      startup: ${random.int}  #需要在重启后触发信息和端点更新
+      #如果eureka配置了security需要在这里添加用户名和密码
+      user.name: ${spring.security.user.name}
+      user.password: ${spring.security.user.password}
+  client:
+    service-url:
+      defaultZone: http://admin:admin@${eureka.instance.hostname}:8080/eureka/,http://admin:admin@${eureka.instance.hostname}:8081/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+    server:
+      enable-self-preservation: false
+      eviction-interval-timer-in-ms: 1000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: ALWAYS
