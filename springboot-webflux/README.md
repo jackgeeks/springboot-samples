@@ -1,6 +1,8 @@
 我们在来看一下下图，可以看到，在目前的Spring WebFlux还没有支持类似
 Mysql这样的关系型数据库，本文以MongoDb数据库为例
+
 ![144cdcde9a18385f23a95b0140bc9f5](http://520htt.com/upload/2020/05/144cdcde9a18385f23a95b0140bc9f5-0cc9552cf7d54e3ca89924df6c60b9ae.png)
+
 pom
 ```
 <dependency>
